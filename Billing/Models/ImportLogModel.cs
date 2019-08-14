@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LNF.Models.Billing;
+using System;
+using System.Collections.Generic;
 
 namespace Billing.Models
 {
@@ -6,5 +8,6 @@ namespace Billing.Models
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public IEnumerable<IRoomDataImportLog> Items { get; set; }
     }
 }

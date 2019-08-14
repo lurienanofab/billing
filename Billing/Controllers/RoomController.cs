@@ -1,19 +1,37 @@
 ﻿using Billing.Models;
+using LNF.Models;
+using LNF.Models.Billing;
+using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Billing.Controllers
 {
     public class RoomController : Controller
     {
-        [Route("room/import-log")]
-        public ActionResult ImportLog()
+        protected IProvider Provider { get; }
+
+        public RoomController(IProvider provider)
         {
-            return View();
+            Provider = provider;
         }
 
-        [Route("room/import-log")]
+        [HttpGet, Route("room/import-log")]
+        public ActionResult ImportLog()
+        {
+            var model = new ImportLogModel
+            {
+                StartDate = DateTime.Now.Date,
+                EndDate = DateTime.Now.Date.AddDays(1)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, Route("room/import-log")]
         public ActionResult ImportLog(ImportLogModel model)
         {
+            model.Items = Provider.Billing.Room.GetImportLogs(model.StartDate, model.EndDate);
             return View(model);
         }
     }

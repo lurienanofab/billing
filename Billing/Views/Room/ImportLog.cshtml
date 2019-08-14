@@ -27,3 +27,28 @@
         </div>
     </div>
 }
+
+@if (Model.Items != null && Model.Items.Count() > 0)
+{
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Import Date</th>
+                <th># Rows</th>
+                <th>Prior Max Event Date</th>
+                <th>New Max Event Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.Items.OrderByDescending(x => x.ImportDateTime))
+            {
+            <tr>
+                <td>@i.ImportDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@i.RowsImported</td>
+                <td>@i.PriorMaxEventDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@i.NewMaxEventDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
